@@ -1,0 +1,28 @@
+name = "aniwish"
+main = "src/index.ts"
+compatibility_date = "2024-11-01"
+compatibility_flags = ["nodejs_compat"]
+
+# Secrets (set with: wrangler secret put <NAME>)
+# TMDB_API_KEY   — required
+# TOKEN_SECRET   — recommended; any long random string (e.g. openssl rand -hex 32)
+#                  If not set the API runs in open mode with no token protection.
+
+[vars]
+NODE_ENV = "production"
+CORS_ORIGIN = "*"
+
+[observability.logs]
+enabled = true
+invocation_logs = true
+
+[observability.traces]
+enabled = false
+
+
+# Embed player static files — served automatically for any route not matched
+# by the worker script (i.e. everything that isn't /v1/* or /v1/proxy)
+[assets]
+directory = "./static"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
